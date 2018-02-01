@@ -11,8 +11,8 @@ class slack (
 
   anchor {'slack::begin':}
 
-  $gem_provider = versioncomp($::puppetversion, '4.0.0') ? {
-    -1i     => 'gem',
+  $gem_provider = versioncmp($::puppetversion, '4.0.0') ? {
+    -1      => 'gem',
     default => 'puppet_gem'
   }
 
@@ -53,11 +53,11 @@ class slack (
       section => 'master',
       setting => 'reports',
       value   => $slack_puppet_reports,
-      require => File [ "${slack_puppet_dir}/slack.yaml"],
+      require => File["${slack_puppet_dir}/slack.yaml"],
       before  => Anchor['slack::end'],
     }
   }
   anchor{'slack::end':
-    require => File [ "${slack_puppet_dir}/slack.yaml"],
+    require => File["${slack_puppet_dir}/slack.yaml"],
   }
 }
