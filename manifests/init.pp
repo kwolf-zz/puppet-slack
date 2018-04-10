@@ -13,13 +13,13 @@ class slack (
 
   $gem_provider = versioncmp($::puppetversion, '4.0.0') ? {
     -1      => 'gem',
-    default => 'puppet_gem'
+    default => 'puppetserver_gem'
   }
 
   if $is_puppetmaster == true {
     package { 'faraday':
       ensure   => installed,
-      provider => puppet_gem,
+      provider => $gem_provider,
       require  => Anchor['slack::begin'],
       before   => File["${slack_puppet_dir}/slack.yaml"],
     }
